@@ -18,6 +18,11 @@ pipeline {
             echo 'ack'
           }
         }
+        stage('Create Artifacts') {
+          steps {
+            sleep 1
+          }
+        }
       }
     }
     stage('Test') {
