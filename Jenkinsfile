@@ -1,19 +1,19 @@
 pipeline {
   agent any
   stages {
-    stage('DEV') {
+    stage('Build') {
       parallel {
-        stage('Build') {
+        stage('Get Repos') {
           steps {
             echo 'Hello World'
           }
         }
-        stage('Deploy') {
+        stage('Build') {
           steps {
             echo 'Build thing'
           }
         }
-        stage('Test') {
+        stage('Unit Test') {
           steps {
             echo 'ack'
           }
@@ -27,31 +27,50 @@ pipeline {
     }
     stage('Test') {
       parallel {
-        stage('Test1') {
+        stage('Deploy to X environment Server A') {
           steps {
             echo 'deploy this'
           }
         }
-        stage('Deploy2') {
+        stage('Deploy to X environment Server B') {
           steps {
             sleep 1
           }
         }
-        stage('Test3') {
+        stage('BVT Test') {
+          steps {
+            sleep 1
+          }
+        }
+        stage('Approval') {
+          steps {
+            input 'Approval Needed'
+          }
+        }
+      }
+    }
+    stage('Prod Stage ') {
+      parallel {
+        stage('Prod Stage Approval') {
+          steps {
+            echo 'test this'
+          }
+        }
+        stage('Prod Stage') {
           steps {
             sleep 1
           }
         }
       }
     }
-    stage('Prod') {
+    stage('Prod Deployment') {
       parallel {
-        stage('Prod') {
+        stage('Prod Deployment Approval') {
           steps {
-            echo 'test this'
+            echo 'wait'
           }
         }
-        stage('Prod Test') {
+        stage('Prod Deploy') {
           steps {
             sleep 1
           }
