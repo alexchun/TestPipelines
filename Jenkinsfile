@@ -1,28 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      parallel {
-        stage('Get Repos') {
-          steps {
-            echo 'Hello World'
-          }
-        }
-        stage('Build') {
-          steps {
-            echo 'Build thing'
-          }
-        }
-        stage('Unit Test') {
-          steps {
-            echo 'ack'
-          }
-        }
-        stage('Create Artifacts') {
-          steps {
-            sleep 1
-          }
-        }
+    stage('Build Project') {
+      steps {
+        echo 'Send Notification'
+        echo 'Get Repo'
+        echo 'Get Nuget'
+        echo 'Build Project'
+        echo 'Run BVT'
+        echo 'Publish Artifacts'
       }
     }
     stage('Approval to Deploy') {
@@ -38,6 +24,11 @@ pipeline {
           }
         }
         stage('Deploy to Test Environment Server B') {
+          steps {
+            sleep 1
+          }
+        }
+        stage('Publish to Database') {
           steps {
             sleep 1
           }
