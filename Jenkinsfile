@@ -25,52 +25,62 @@ pipeline {
         }
       }
     }
-    stage('Test') {
-      parallel {
-        stage('Deploy to X environment Server A') {
-          steps {
-            echo 'deploy this'
-          }
-        }
-        stage('Deploy to X environment Server B') {
-          steps {
-            sleep 1
-          }
-        }
-        stage('BVT Test') {
-          steps {
-            sleep 1
-          }
-        }
-        stage('Approval') {
-          steps {
-            input 'Approval Needed'
-          }
-        }
+    stage('Approval to Deploy') {
+      steps {
+        sleep 1
       }
     }
-    stage('Prod Stage ') {
+    stage('Deploy to Test Environment') {
       parallel {
-        stage('Prod Stage Approval') {
+        stage('Deploy to Test Environment Server A') {
           steps {
-            echo 'test this'
+            sleep 1
           }
         }
-        stage('Prod Stage') {
+        stage('Deploy to Test Environment Server B') {
           steps {
             sleep 1
           }
         }
       }
     }
-    stage('Prod Deployment') {
+    stage('BVT Test') {
+      steps {
+        sleep 1
+      }
+    }
+    stage('Approval to Stage') {
+      steps {
+        sleep 1
+      }
+    }
+    stage('Stage to Production') {
       parallel {
-        stage('Prod Deployment Approval') {
+        stage('Stage to Production Server A') {
           steps {
-            echo 'wait'
+            sleep 1
           }
         }
-        stage('Prod Deploy') {
+        stage('Stage to Production Server B') {
+          steps {
+            sleep 1
+          }
+        }
+      }
+    }
+    stage('Approval to Deploy to Production') {
+      steps {
+        sleep 1
+      }
+    }
+    stage('Deploy to Production Server A') {
+      parallel {
+        stage('Deploy to Production Server A') {
+          steps {
+            sleep 1
+          }
+        }
+        stage('Deploy to Production Server B') {
           steps {
             sleep 1
           }
