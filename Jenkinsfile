@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'GoToThisNode'
+    }
+    
+  }
   stages {
     stage('Build Project') {
       steps {
@@ -19,30 +24,59 @@ pipeline {
     stage('Deploy to Test Environment') {
       parallel {
         stage('Deploy to Test Environment Server A') {
+          agent {
+            node {
+              label 'GoToThisNodeA'
+            }
+            
+          }
           steps {
             sleep 1
+            echo 'Run Job To deploy this thing to A'
           }
         }
         stage('Deploy to Test Environment Server B') {
+          agent {
+            node {
+              label 'GoToThisNodeB'
+            }
+            
+          }
+          environment {
+            custom_variable = '1'
+          }
           steps {
             sleep 1
+            echo 'Run job to deploy this thing to B'
           }
         }
         stage('Publish to Database') {
           steps {
             sleep 1
+            echo 'Publish if needed'
           }
         }
       }
     }
     stage('BVT Test') {
+      agent {
+        node {
+          label 'RunOnThisNode'
+        }
+        
+      }
+      environment {
+        TransformSomething = '1'
+      }
       steps {
         sleep 1
+        echo 'RunTestsJob'
       }
     }
     stage('Approval to Stage') {
       steps {
         sleep 1
+        input 'Wait for Someone to Approve'
       }
     }
     stage('Stage to Production') {
@@ -78,5 +112,8 @@ pipeline {
         }
       }
     }
+  }
+  environment {
+    TransformSomething = '1'
   }
 }
