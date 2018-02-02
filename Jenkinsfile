@@ -59,12 +59,7 @@ pipeline {
       }
     }
     stage('BVT Test') {
-      agent {
-        node {
-          label 'RunOnThisNode'
-        }
-        
-      }
+      agent any
       environment {
         TransformSomething = '1'
       }
