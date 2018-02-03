@@ -93,7 +93,10 @@ pipeline {
         sleep 1
       }
     }
-    stage('Deploy to Production Server A') {
+    when{
+        branch 'master'
+    }
+      stage('Deploy to Production Server A') {
       parallel {
         stage('Deploy to Production Server A') {
           steps {
