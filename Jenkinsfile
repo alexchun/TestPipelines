@@ -89,12 +89,12 @@ pipeline {
       }
     }
     stage('Approval to Deploy to Production') {
+          when{
+        branch 'master'
+    }
       steps {
         sleep 1
       }
-    }
-    when{
-        branch 'master'
     }
       stage('Deploy to Production Server A') {
       parallel {
