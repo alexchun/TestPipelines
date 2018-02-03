@@ -69,12 +69,18 @@ pipeline {
       }
     }
     stage('Approval to Stage') {
+                when{
+        branch 'master'
+    }
       steps {
         sleep 1
         input 'Wait for Someone to Approve'
       }
     }
     stage('Stage to Production') {
+                when{
+        branch 'master'
+    }
       parallel {
         stage('Stage to Production Server A') {
           steps {
@@ -97,6 +103,9 @@ pipeline {
       }
     }
       stage('Deploy to Production Server A') {
+                  when{
+        branch 'master'
+    }
       parallel {
         stage('Deploy to Production Server A') {
           steps {
